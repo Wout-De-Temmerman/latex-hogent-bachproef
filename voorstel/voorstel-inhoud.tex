@@ -15,20 +15,20 @@ uitgewerkt met \\ Maarten Adriaenssens als mede-auteur.
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Een netwerk kan snel futureproof worden gemaakt door de implementatie van IPv6, een relatief nieuwe technologie die het probleem van de gelimiteerde 32-bit adressen in IPv4 oplost
-door gebruik te maken van 128-bit adressen. Hoewel deze technologie al sinds 1998 bestaat, blijft de implementatie ervan beperkt. 
+Door de implementatie van IPv6 kan een netwerk snel futureproof gemaakt worden, het is een relatief nieuwe technologie die het probleem van de gelimiteerde 32-bit adressen in IPv4 oplost
+door gebruik te maken van 128-bit adressen. Hoewel deze technologie al sinds 1998 bestaat, blijft de toepassing ervan beperkt. 
 Dit blijkt duidelijk uit de IPv6 Support Rate-grafiek zoals gezien op de website van \textcite{EuropeanCommission}, 
-waaruit blijkt dat in België aan het begin van 2024 slechts 59\% van de eindgebruikers toegang heeft tot de technologie, 
-terwijl slechts 29\% van de services compatibel is met IPv6.
+waaruit blijkt dat in België aan het begin van 2024 59\% van de eindgebruikers toegang heeft tot de technologie, 
+terwijl slechts 29\% van de services compatibel zijn met IPv6.\\
 
-SmartEye wil ervoor zorgen dat het Eduroam-netwerk dat ze hebben opgezet en onderhouden, de nodige upgrade krijgt, 
-en zoekt daarvoor een geautomatiseerde oplossing. Een eerste probleem hierbij is dat de netwerken die zijn uitgebouwd, 
+SmartEye wil ervoor zorgen dat het Eduroam-netwerk, dat ze hebben opgezet en onderhouden, de nodige upgrade krijgt en zoekt daarvoor een geautomatiseerde oplossing. 
+Een eerste probleem hierbij is dat de netwerken die zijn uitgebouwd, 
 niet allemaal op dezelfde manier functioneren. De netwerkapparatuur die is geïnstalleerd bestaat uit onder andere Cisco- en MikroTik-apparatuur, 
 waarbij elk toestel op een andere manier moet worden geconfigureerd.  
 De configuratie van een MikroTik-toestel vereist eerst een certificaat, dat door SmartEye zelf wordt voorzien voor de uitwerking van deze proef. 
-Een dual-stack netwerk heeft de voorkeur, aangezien dit geïmplementeerd kan worden zonder het risico dat bestaande opstellingen niet meer werken. 
-Daarnaast zal NAT64 aan bod komen om toestellen die IPv6 niet ondersteunen toch te laten communiceren met het netwerk. Dit alles draagt bij aan de robuustheid van het netwerk, 
-aangezien beide technologieën dan op alle locaties gebruikt kunnen worden. \\
+Een dual-stack netwerk heeft de voorkeur, omdat dit geïmplementeerd kan worden zonder het risico dat bestaande opstellingen niet werken. 
+Daarnaast zal NAT64 aan bod komen om toestellen die IPv6 niet ondersteunen toch te laten communiceren met het netwerk. Dit alles draagt bij aan de robuustheid ervan, 
+aangezien beide technologieën dan op alle plaatsen gebruikt kunnen worden. \\
 
 Het doel van de proef is om een algemeen script te ontwikkelen dat gebruikt kan worden om alle netwerktoestellen binnen het Eduroam-netwerk voor te bereiden op het gebruik van het nieuw verkregen IPv6-adres. 
 Dit script zal niet alleen op de externe toestellen worden toegepast, maar ook op de backbone van SmartEye zelf. 
@@ -49,16 +49,15 @@ Ook op de website van \textcite{EuropeanCommission} is zichtbaar dat op vlak van
 \subsection{Netwerk-configuratie via Ansible}
 \label{sec:netconfigAnsible}
 
-Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de verschillende merken netwerkapparatuur. 
-Hiervoor zal de configuratie worden opgesplitst in verschillende YAML-bestanden, die in het Ansible-playbook worden aangeroepen. 
-Deze YAML-bestanden bevatten ten minste de volgende componenten: 
-functies voor het instellen van IPv6-adressen op de interfaces, 
+Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de merken netwerkapparatuur. 
+Hiervoor zal de configuratie worden opgesplitst in apparte YAML-bestanden, die in het Ansible-playbook worden aangeroepen.\\
+Deze YAML-bestanden bevatten minstens de volgende componenten: functies voor het instellen van IPv6-adressen op de interfaces, 
 de juiste configuratie van de loopback-interface, en de minimale configuratie voor EIGRP of OSPF \autocite{MohdFuziMohdFaris2021}.
 
 \subsection{IPv4 vs IPv6}
 \label{sec:IPv4vsIPv6}
 
-Met de huidige snelheid waarmee het internet groeit en evolueert, wordt het steeds duidelijker dat de huidige toewijzing van IP-adressen niet zal kunnen bijhouden. 
+Met de huidige snelheid waarmee het internet groeit en evolueert, wordt het duidelijker dat de huidige toewijzing van IP-adressen het tempo niet zal kunnen bijhouden. 
 Zelfs met technologieën zoals CIDR1 en NAT2 zal dit probleem niet worden opgelost, alleen uitgesteld \autocite{Gu2005}.
 Gelukkig bestaat er al een andere oplossing: het gebruik van IPv6, aangezien dit 128 bits gebruikt voor zijn adresseringsformaat in plaats van de 32 bits van IPv4. 
 De huidige netwerkinfrastructuren bieden verschillende manieren om IPv6 te implementeren: dual-stack, tunneling of vertaling \autocite{Zunainah2021}. 
@@ -76,14 +75,63 @@ Hoewel op het eerste gezicht een dual-stack de oplossing lijkt, moet er verder o
 \section{Methodologie}%
 \label{sec:methodologie}
 
+\subsection{Voorbereiding}
+\label{sec:voorbereiding}
+{\small Duurtijd : 2 - 3 Weken}\\
+
+Aangezien een groot deel van de toestellen afkomstig is van MikroTik, zal er eerst een bijscholing plaatsvinden waarin een certificaat wordt behaald. 
+Na het behalen van dit certificaat zal er een overleg plaatsvinden met de co-promotor om de opdracht verder toe te lichten. 
+Hierbij wordt bepaald welke toestellen geconfigureerd moeten worden en op welke manier dit moet gebeuren.\\
+
+Om de scripts te kunnen schrijven voor de verschillende toestellen, zal uitgebreide documentatie verzameld worden. 
+Daarnaast worden de benodigde beveiligingsmaatregelen besproken en indien mogelijk in de configuratie verwerkt.\\
+
+Tot slot wordt vastgesteld welke IPv6-adressen aan welke gebruikers worden toegewezen en welke adressen of reeksen gereserveerd blijven voor specifieke doeleinden.
+
+\subsection{Ontwerp}
+\label{sec:ontwerp}
+{\small Duurtijd : 3 - 4 Weken}\\
+
+De uitwerking van het script gebeurt via een Ansible Playbook, dat gebruikmaakt van verschillende YAML-bestanden om een opsplitsing te maken tussen de verschillende types toestellen.
+Het playbook is een zelfgeschreven verzameling van bestanden die alle nodige voorzieningen bevat en de benodigde toestellen configureert. De configuraties zijn daarbij opgesplitst in afzonderlijke taken.
+
+\subsection{Testing}
+\label{sec:testing}
+{\small Duurtijd : 3 - 4 Weken}\\
+
+Het testen van dit script zal plaatsvinden in een labo-omgeving. In het eerste stadium worden virtuele machines op de testservers gebruikt als een soort 'sandbox'.
+Deze omgeving zal dan ook gebruikt worden als een proof of concept.
+Indien alles daar goed verloopt, kan er worden overgegaan naar de volgende stap.
+Bij foutmeldingen of problemen zal contact worden opgenomen met de co-promotor. Voor eenvoudige fouten kan ook gebruik worden gemaakt van online bronnen om een oplossing te vinden.
+
+\subsection{Deployment}
+\label{sec:deployment}
+{\small Duurtijd : 2 - 4 Weken}\\
+
+De uitrol van het script verloopt in verschillende stadia. 
+Zodra alles is goedgekeurd in de testomgeving, wordt als eerste gekeken naar de overgang van de backbone van het bedrijf naar IPv6.
+Dit is de eerste stap omdat de backbone uit een groot aantal merken netwerkapparatuur bestaat, wat een bredere testbasis biedt.\\
+
+Na de implementatie op de backbone wordt de focus verlegd naar kleine particuliere netwerken. 
+Dit stadium heeft een lager risico, waardoor eventuele problemen makkelijker op te lossen zijn voordat grotere implementaties plaatsvinden.\\
+
+In het laatste stadium worden de grote locaties aangepakt, zoals onderwijsinstellingen en grote studentenkoten. 
+Voor deze implementatie is eerst overleg nodig met de netwerkverantwoordelijken van de locaties om een probleemloze overgang te garanderen.
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+De implementatie van een geautomatiseerde methode voor de overgang naar IPv6 op het Eduroam-netwerk heeft aangetoond 
+dat een netwerk met verschillende netwerkapparatuur een uitgebreid stappenplan vereist. 
+Het is daarbij essentieel om een duidelijk onderscheid te maken tussen de verschillende vereisten van de gebruikte apparatuur.
 
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+De belangrijkste resultaten zijn:
+\begin{itemize}
+    \item Een robuust script dat kan gebruikt worden voor de verschillende merken van netwerkapparatuur.
+    \item Een overgang voor alle klanten van SmartEye naar IPv6 waarbij hoofdzakelijk op een dualstack wijze gewerkt is.
+    \item Een script dat foutbestendig is en dat een bestaand netwerk niet uitschakelt.
+\end{itemize}
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
-
+De testfase in de labo-omgeving heeft de efficiëntie van de scripts getoond en de uitrol op de backbone van SmartEye heeft de betrouwbaarheid van het netwerk bevestigd. 
+Dit biedt een basis voor de verdere implementatie op externe locaties van nieuwe klanten/gebruikers van het Eduroam netwerk.
