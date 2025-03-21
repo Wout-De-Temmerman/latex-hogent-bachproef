@@ -26,5 +26,49 @@
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
 
-\lipsum[21-25]
+\section{Voorbereiding}
+\label{sec:voorbereiding}
+
+Aangezien een groot deel van de netwerkapparatuur afkomstig is van MikroTik, zal de eerste stap bestaan uit een bijscholingstraject waarin een certificaat behaald kan worden.
+Deze bijscholing kan dan gebruikt worden voor het efficiënt configureren van MikroTik apparatuur.
+Na het behalen van dit certificaat wordt er een overleg gepland met de co-promotor, waarin de opdracht verder toegelicht wordt. 
+Tijdens dit overleg worden de doelstellingen verduidelijkt, en wordt er bepaald welke specifieke toestellen geconfigureerd moeten worden en op welke manier dit het beste kan gebeuren. 
+Vervolgens zal er uitgebreide documentatie verzameld worden die nodig is voor het schrijven van de scripts voor de verschillende toestellen. 
+Deze documentatie bevat technische handleidingen, configuratievoorbeelden en richtlijnen die nodig zijn voor een correcte implementatie. 
+Tot slot wordt in deze fase bepaald welke IPv6-adressen aan welke gebruikers of apparaten worden toegewezen. 
+Er wordt ook een schema opgesteld voor de adressen of adressenreeksen die gereserveerd moeten blijven voor specifieke doeleinden, zoals netwerkapparatuur, 
+servers of andere infrastructuurelementen.
+
+\section{Ontwerp}
+\label{sec:ontwerp}
+
+De volgende stap is de uitwerking van het configuratiescript, welke gebeurt via een Ansible Playbook. 
+Dit playbook maakt gebruik van verschillende YAML-bestanden, zodat er een duidelijke scheiding kan worden gemaakt tussen de configuraties voor de verschillende typen toestellen. 
+Het Ansible Playbook zelf is een zelfgeschreven verzameling van bestanden die alle nodige configuraties en benodigdheden bevat. 
+Hierbij worden de configuraties opgesplitst in afzonderlijke taken, zodat iedere stap duidelijk is. 
+De ontwerpfase omvat ook het testen van het playbook in een gecontroleerde omgeving, waar de scripts kunnen worden verfijnd voordat ze in de productieomgeving worden uitgerold.
+
+\section{Testing}
+\label{sec:testing}
+
+Het testen van het script zal plaatsvinden in een labo-omgeving, waarbij een reeks virtuele machines op de testservers zal worden ingezet. 
+Deze machines dienen als een soort 'sandbox', waarin de configuraties veilig kunnen worden getest zonder de productieomgeving te beïnvloeden. 
+De labo-omgeving zal ook dienen als proof of concept, waarbij de functionaliteit en betrouwbaarheid van het playbook grondig worden getest.
+In deze fase worden de configuraties getest, en worden eventuele problemen of fouten genoteerd. 
+Ook wordt hier gekeken of alles functioneert zoals verwacht en kan er gekeken worden welke toestellen op welke manier compatibel zijn. 
+Bij elk probleem wordt onderzocht hoe dit kan worden opgelost, en wordt gekeken of bepaalde delen van het script kunnen worden verbeterd of vereenvoudigd. 
+Indien er grote delen van de configuratie kunnen worden samengevoegd of aangepast, wordt dit gedaan om een robuust en efficiënt playbook te ontwikkelen.
+Het einddoel van de testfase is om een playbook te creëren dat betrouwbaar en flexibel genoeg is om gebruikt te worden op verschillende typen netwerkapparatuur, 
+met de garantie dat het script effectief en zonder grote complicaties werkt.
+
+\section{Deployment}
+\label{sec:deployment}
+
+Na het testen van het playbook kan er een rapport worden opgesteld, waarin de opgetreden problemen, fouten en de daaropvolgende oplossingen worden gedocumenteerd. 
+Dit rapport zal ook aanbevelingen bevatten voor eventuele toekomstige verbeteringen of uitbreidingen van het playbook. 
+Bovendien zal er al een eerste versie van het playbook beschikbaar zijn, die klaar is voor implementatie in de productieomgeving.
+Indien nodig kan het playbook verder worden uitgewerkt en geoptimaliseerd door SmartEye, om te zorgen dat het geschikt is voor de grotere netwerken van de organisatie. 
+Het einddoel van deze fase is om een goed werkend en geoptimaliseerd playbook te leveren dat kan worden toegepast op de netwerkapparatuur van de organisatie. 
+Het playbook zal dan verder worden ingezet in de bredere netwerkinfrastructuur, wat de netwerkbeheerprocessen zal automatiseren en vereenvoudigen.
+
 

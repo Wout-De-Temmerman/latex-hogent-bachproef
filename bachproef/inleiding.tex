@@ -5,32 +5,54 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
-
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
-
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+Door de implementatie van IPv6 kan een netwerk snel futureproof worden gemaakt. 
+Het is een relatief nieuwe technologie die het probleem van de gelimiteerde 32-bit adressen in IPv4 oplost door gebruik te maken van 128-bit adressen. 
+Hoewel IPv6 al sinds 1998 bestaat, blijft de toepassing ervan beperkt. Dit blijkt duidelijk uit de IPv6 Support Rate-grafiek op de website van \textcite{EuropeanCommission}, 
+waaruit blijkt dat in België begin 2024 59\% van de eindgebruikers toegang heeft tot IPv6, terwijl slechts 29\% van de services compatibel zijn met de technologie.
+\\
+
+Deze cijfers tonen aan dat de adoptie van IPv6 groeit aan constante snelheid, maar dat er nog steeds een duidelijke kloof bestaat tussen netwerktoegang en implementatie. 
+Aangezien bedrijven en organisaties steeds vaker overschakelen op IPv6, wordt het voor toekomstige IT-professionals essentieel om hier grondige kennis over te verwerven. 
+Daarom is het belangrijk dat de opleiding IPv6 een plaats geeft binnen het curriculum, zodat studenten goed voorbereid zijn op de netwerkinfrastructuur van de toekomst.
+\\
+
+Het netwerklabo op campus Schoonmeersen van HOGENT wordt frequent gebruikt voor demonstraties en proefopstellingen in de lessen Netwerken 1 tot 4. 
+Echter, het labo mist een essentieel component: een IPv6-verbinding. 
+Een mogelijke oplossing is het gebruik van een node op de servers van IDLab aan de UGent. 
+Via deze node kan een tunnel worden opgezet, waardoor het netwerkverkeer via het UGent-netwerk – dat wél IPv6 ondersteunt – kan worden gerouteerd.
+\\
+
+Deze opstelling kan al worden gerealiseerd met een bestaand script, geschreven door dhr. Van Maele. 
+Dit script legt een verbinding tussen een virtuele machine en de node in IDLab, waarbij de node fungeert als OpenVPN-server en de virtuele machine als OpenVPN-client. 
+Daarnaast wordt er een Layer 2-tunnel opgezet tussen deze twee punten, waarop de OpenVPN-verbinding steunt.
+Het probleem hierbij is echter dat het opzetten van deze configuratie veel tijd en moeite vergt van de lectoren, 
+of zelfs niet praktisch uitvoerbaar is vanwege het gebrek aan gebruiksvriendelijkheid van het script.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+De vraag waarover dit onderzoek een oplossing probeert te vinden gaat als volgt:
+Kan de opzet van een IPv6 connectie aan de hand van een tunnel geautomatiseerd worden met Ansible?
+
+Om deze verder onder te verdelen zal er vooral onderzoek worden gedaan naar volgende vragen:
+\begin{itemize}
+    \item Waar liggen de essentiële verschillen tussen Layer 2 en OpenVPN tunnels?
+    \item Is er een vershil op vlak van performantie?
+    \item Is het mogelijk om een connectie tussen 2 netwerken op te zetten met enkel een Layer 2 tunnel?
+    \item Kan het bestaande script in een Ansible Playbook worden verwerkt?
+    \item Wat zijn de resultaten na het testen in effectieve omgeving?
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+Dit onderzoek richt zich op het in kaart brengen van de verschillen tussen deze tunnelingmethodes en het testen van mogelijke alternatieve methoden. 
+Uiteindelijk wordt de meest efficiënte en correcte implementatie verwerkt in een Ansible Playbook, dat automatisch de connectie tussen beide toestellen opzet.
+Deze oplossing kan dan worden toegepast bij toekomstige labo’s in het netwerklabo, zodat snel en eenvoudig een functionerende IPv6-verbinding kan worden opgezet. 
+Hierdoor kunnen studenten niet alleen de theorie over IPv6 bestuderen, maar deze ook daadwerkelijk testen in een realistische omgeving.
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}

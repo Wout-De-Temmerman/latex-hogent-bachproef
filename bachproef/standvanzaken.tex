@@ -7,45 +7,71 @@
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
 
-Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{grail.jpg}
+%   \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
+% \end{figure}
 
-Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
+% \begin{listing}
+%   \begin{minted}{python}
+%     import pandas as pd
+%     import seaborn as sns
 
-\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+%     penguins = sns.load_dataset('penguins')
+%     sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
+%   \end{minted}
+%   \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
+% \end{listing}
 
-Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
+% \begin{table}
+  %   \centering
+  %   \begin{tabular}{lcr}
+  %     \toprule
+  %     \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
+  %     $\alpha$         & $\beta$          & $\gamma$         \\
+  %     \midrule
+  %     A                & 10.230           & a                \\
+  %     B                & 45.678           & b                \\
+  %     C                & 99.987           & c                \\
+  %     \bottomrule
+  %   \end{tabular}
+  %   \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
+  % \end{table}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{grail.jpg}
-  \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
-\end{figure}
-
-\begin{listing}
-  \begin{minted}{python}
-    import pandas as pd
-    import seaborn as sns
-
-    penguins = sns.load_dataset('penguins')
-    sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
-  \end{minted}
-  \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
-\end{listing}
-
-\lipsum[7-20]
-
-\begin{table}
-  \centering
-  \begin{tabular}{lcr}
-    \toprule
-    \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
-    $\alpha$         & $\beta$          & $\gamma$         \\
-    \midrule
-    A                & 10.230           & a                \\
-    B                & 45.678           & b                \\
-    C                & 99.987           & c                \\
-    \bottomrule
-  \end{tabular}
-  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
-\end{table}
-
+  \section{Implementatie}
+  \label{sec:implementatie}
+  
+  Zoals eerder vermeld, is de implementatie van IPv6 beperkt. 
+  Dit terwijl marktleiders van internet service providers zoals Cloudflare, Proximus en Telenet dicht tegen de 100\% zitten op het vlak van aangeboden IPv6 percentage \autocite{Test2024}. 
+  Ook op de website van \textcite{EuropeanCommission} is zichtbaar dat op vlak van end-user implementatie België deel van de marktleiders is, terwijl de services nog geen 30\% haalt.
+  
+  \section{SLAAC}
+  \label{sec:SLAAC}
+  
+  IPv6 biedt twee primaire methoden voor automatische adresconfiguratie: SLAAC en DHCPv6. 
+  SLAAC (Stateless Address Autoconfiguration) stelt apparaten in staat zich automatisch te configureren door gebruik te maken van Router \\ Advertisement-berichten (RA) die door routers worden verzonden. 
+  Deze berichten bevatten belangrijke informatie, zoals het subnetprefix en de standaardrouter. Apparaten genereren vervolgens een globaal IPv6-adres op basis van het ontvangen prefix en hun interface-ID. 
+  Het voordeel van SLAAC is dat het geen beheer aan de routerzijde vereist, wat het een eenvoudige en robuuste oplossing maakt \autocite{Maris2024}.
+  \\
+  
+  DHCPv6 (Stateful Address Configuration) biedt daarentegen een centraal protocol om adressen en andere netwerkparameters toe te wijzen. 
+  In dit geval sturen routers RA-berichten zonder prefixinformatie, waardoor apparaten DHCPv6 gebruiken voor hun configuratie. 
+  Dit maakt DHCPv6 aantrekkelijker voor netwerken die meer controle nodig hebben over het toewijzen van adressen en andere netwerkinstellingen \autocite{Maris2024}.
+  \\
+  
+  Omdat het de bedoeling is om een geautomatiseerde aanpak te hanteren, zal in elk netwerk gebruik worden gemaakt van SLAAC (Stateless Address Autoconfiguration), tenzij anders gevraagd.
+  
+  \section{Netwerk-configuratie via Ansible}
+  \label{sec:netconfigAnsible}
+  
+  Een eerste stap in automatisatie is het plaatsen van de configuratie in een algemeen configuratiebestand en het testen of deze correct kan worden uitgelezen door de netwerkapparatuur. 
+  Voor toestellen van MikroTik blijkt dit gelukkig vrij eenvoudig te zijn, zoals ook aangetoond door \textcite{Arturs2022}.
+  \\
+  
+  Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de verschillende merken netwerkapparatuur. 
+  Hiervoor wordt de configuratie opgesplitst in aparte YAML-bestanden, die in het Ansible-playbook worden aangeroepen.
+  \\
+  
+  Deze YAML-bestanden bevatten minimaal de volgende componenten: functies voor het instellen van IPv6-adressen op de interfaces, de juiste configuratie van de loopback-interface, 
+  en de minimale configuratie voor EIGRP of OSPF \autocite{MohdFuziMohdFaris2021}.

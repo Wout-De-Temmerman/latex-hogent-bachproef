@@ -21,18 +21,28 @@ Dit blijkt duidelijk uit de IPv6 Support Rate-grafiek zoals gezien op de website
 waaruit blijkt dat in België aan het begin van 2024 59\% van de eindgebruikers toegang heeft tot de technologie, 
 terwijl slechts 29\% van de services compatibel zijn met IPv6.\\
 
-SmartEye wil ervoor zorgen dat het Eduroam-netwerk, dat ze hebben opgezet en onderhouden, de nodige upgrade krijgt en zoekt daarvoor een geautomatiseerde oplossing. 
+SmartEye wil ervoor zorgen dat hun \\ 
+multi-tenant netwerken, dat ze hebben opgezet en onderhouden, de nodige upgrade krijgt en zoekt daarvoor een geautomatiseerde oplossing. 
 Een eerste probleem hierbij is dat de netwerken die zijn uitgebouwd, 
 niet allemaal op dezelfde manier functioneren. De netwerkapparatuur die is geïnstalleerd bestaat uit onder andere Cisco- en MikroTik-apparatuur, 
 waarbij elk toestel op een andere manier moet worden geconfigureerd.  
 De configuratie van een MikroTik-toestel vereist eerst een certificaat, dat door SmartEye zelf wordt voorzien voor de uitwerking van deze proef. 
 Een dual-stack netwerk heeft de voorkeur, omdat dit geïmplementeerd kan worden zonder het risico dat bestaande opstellingen niet werken. 
-Daarnaast zal NAT64 aan bod komen om toestellen die IPv6 niet ondersteunen toch te laten communiceren met het netwerk. Dit alles draagt bij aan de robuustheid ervan, 
-aangezien beide technologieën dan op alle plaatsen gebruikt kunnen worden. \\
+\\
 
-Het doel van de proef is om een algemeen script te ontwikkelen dat gebruikt kan worden om alle netwerktoestellen binnen het Eduroam-netwerk voor te bereiden op het gebruik van het nieuw verkregen IPv6-adres. 
-Dit script zal niet alleen op de externe toestellen worden toegepast, maar ook op de backbone van SmartEye zelf. 
-De ontwikkeling van het script zal plaatsvinden in een labo-omgeving die door SmartEye is voorzien.
+Het doel van de proef is om een antwoord te bieden op de volgende onderzoeksvraag:
+\begin{quote}
+    Kan men de uitrol van IPv6 automatiseren en wat zijn de mogelijke problemen die zich kunnen voordoen op vlak van compatibiliteit?
+\end{quote}
+
+Hier valt dus ook onder:
+\begin{itemize}
+    \item Waar liggen de essentiële verschillen tussen de toestellen en wat is gelijkaardig op vlak van configuratie?
+    \item Kan dit allemaal gedaan worden in 1 Ansible Playbook?
+    \item Waar moet rekening mee worden gehouden indien dit wordt toegepast op grotere netwerken dan de testomgeving?
+    \item Wat zijn de resultaten na het testen in een gecontroleerde omgeving, toename of verlies van functionaliteit?
+    \item Wat moet er worden verandert om dit ook te gebruiken binnen andere organisaties?
+\end{itemize}
 
 %---------- Stand van zaken ---------------------------------------------------
 
@@ -46,23 +56,36 @@ Zoals eerder vermeld is de implementatie van IPv6 beperkt.
 Dit terwijl marktleiders van internet service providers zoals Cloudflare, Proximus en Telenet dicht tegen de 100\% zitten op het vlak van aangeboden IPv6 percentage \autocite{Test2024}. 
 Ook op de website van \textcite{EuropeanCommission} is zichtbaar dat op vlak van end-user implementatie België deel van de marktleiders is, terwijl de services nog geen 30\% haalt.
 
+\subsection{SLAAC}
+\label{sec:SLAAC}
+
+IPv6 biedt twee primaire methoden voor automatische adresconfiguratie: SLAAC en DHCPv6. 
+SLAAC (Stateless Address Autoconfiguration) stelt apparaten in staat zich automatisch te configureren door gebruik te maken van Router \\ Advertisement-berichten (RA) die door routers worden verzonden. 
+Deze berichten bevatten belangrijke informatie, zoals het subnetprefix en de standaardrouter. Apparaten genereren vervolgens een globaal IPv6-adres op basis van het ontvangen prefix en hun interface-ID. 
+Het voordeel van SLAAC is dat het geen beheer aan de routerzijde vereist, wat het een eenvoudige en robuuste oplossing maakt \autocite{Maris2024}.
+\\
+
+DHCPv6 (Stateful Address Configuration) biedt daarentegen een centraal protocol om adressen en andere netwerkparameters toe te wijzen. 
+In dit geval sturen routers RA-berichten zonder prefixinformatie, waardoor apparaten DHCPv6 gebruiken voor hun configuratie. 
+Dit maakt DHCPv6 aantrekkelijker voor netwerken die meer controle nodig hebben over het toewijzen van adressen en andere netwerkinstellingen \autocite{Maris2024}.
+\\
+
+Omdat het de bedoeling is om een geautomatiseerde aanpak te hanteren, zal in elk netwerk gebruik worden gemaakt van SLAAC (Stateless Address Autoconfiguration), tenzij anders gevraagd.
+
 \subsection{Netwerk-configuratie via Ansible}
 \label{sec:netconfigAnsible}
 
-Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de merken netwerkapparatuur. 
-Hiervoor zal de configuratie worden opgesplitst in apparte YAML-bestanden, die in het Ansible-playbook worden aangeroepen.\\
-Deze YAML-bestanden bevatten minstens de volgende componenten: functies voor het instellen van IPv6-adressen op de interfaces, 
-de juiste configuratie van de loopback-interface, en de minimale configuratie voor EIGRP of OSPF \autocite{MohdFuziMohdFaris2021}.
+Een eerste stap in automatisatie is het plaatsen van de configuratie in een algemene configuratiebestand en het testen of deze correct kan worden uitgelezen door de netwerkapparatuur. 
+Voor toestellen van MikroTik blijkt dit gelukkig vrij eenvoudig te zijn, zoals ook aangetoond door \textcite{Arturs2022}.
+\\
 
-\subsection{IPv4 vs IPv6}
-\label{sec:IPv4vsIPv6}
+Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de verschillende merken netwerkapparatuur. 
+Hiervoor wordt de configuratie opgesplitst in aparte YAML-bestanden, die in het Ansible-playbook worden aangeroepen.
+\\
 
-Met de huidige snelheid waarmee het internet groeit en evolueert, wordt het duidelijker dat de huidige toewijzing van IP-adressen het tempo niet zal kunnen bijhouden. 
-Zelfs met technologieën zoals CIDR1 en NAT2 zal dit probleem niet worden opgelost, alleen uitgesteld \autocite{Gu2005}.
-Gelukkig bestaat er al een andere oplossing: het gebruik van IPv6, aangezien dit 128 bits gebruikt voor zijn adresseringsformaat in plaats van de 32 bits van IPv4. 
-De huidige netwerkinfrastructuren bieden verschillende manieren om IPv6 te implementeren: dual-stack, tunneling of vertaling \autocite{Zunainah2021}. 
-Deze implementatiemethoden hebben elk hun eigen voordelen en nadelen. De keuze is sterk afhankelijk van de huidige netwerktopologie en -infrastructuur. 
-Hoewel op het eerste gezicht een dual-stack de oplossing lijkt, moet er verder onderzoek worden gedaan om de optimale keuze te bepalen \autocite{Zehl2001}.
+Deze YAML-bestanden bevatten minimaal de volgende componenten: functies voor het instellen van IPv6-adressen op de interfaces, de juiste configuratie van de loopback-interface, 
+en de minimale configuratie voor EIGRP of OSPF \autocite{MohdFuziMohdFaris2021}.
+
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
@@ -79,59 +102,73 @@ Hoewel op het eerste gezicht een dual-stack de oplossing lijkt, moet er verder o
 \label{sec:voorbereiding}
 {\small Duurtijd : 2 - 3 Weken}\\
 
-Aangezien een groot deel van de toestellen afkomstig is van MikroTik, zal er eerst een bijscholing plaatsvinden waarin een certificaat wordt behaald. 
-Na het behalen van dit certificaat zal er een overleg plaatsvinden met de co-promotor om de opdracht verder toe te lichten. 
-Hierbij wordt bepaald welke toestellen geconfigureerd moeten worden en op welke manier dit moet gebeuren.\\
-
-Om de scripts te kunnen schrijven voor de verschillende toestellen, zal uitgebreide documentatie verzameld worden. 
-Daarnaast worden de benodigde beveiligingsmaatregelen besproken en indien mogelijk in de configuratie verwerkt.\\
-
-Tot slot wordt vastgesteld welke IPv6-adressen aan welke gebruikers worden toegewezen en welke adressen of reeksen gereserveerd blijven voor specifieke doeleinden.
+Aangezien een groot deel van de netwerkapparatuur afkomstig is van MikroTik, zal de eerste stap bestaan uit een bijscholingstraject waarin een certificaat behaald kan worden.
+Deze bijscholing kan dan gebruikt worden voor het efficiënt configureren van MikroTik apparatuur.
+Na het behalen van dit certificaat wordt er een overleg gepland met de co-promotor, waarin de opdracht verder toegelicht wordt. 
+Tijdens dit overleg worden de doelstellingen verduidelijkt, en wordt er bepaald welke specifieke toestellen geconfigureerd moeten worden en op welke manier dit het beste kan gebeuren. 
+Vervolgens zal er uitgebreide documentatie verzameld worden die nodig is voor het schrijven van de scripts voor de verschillende toestellen. 
+Deze documentatie bevat technische handleidingen, configuratievoorbeelden en richtlijnen die nodig zijn voor een correcte implementatie. 
+Daarnaast wordt er in deze fase aandacht besteed aan de benodigde beveiligingsmaatregelen. 
+Tot slot wordt in deze fase bepaald welke IPv6-adressen aan welke gebruikers of apparaten worden toegewezen. 
+Er wordt ook een schema opgesteld voor de adressen of adressenreeksen die gereserveerd moeten blijven voor specifieke doeleinden, zoals netwerkapparatuur, 
+servers of andere infrastructuurelementen.
 
 \subsection{Ontwerp}
 \label{sec:ontwerp}
 {\small Duurtijd : 3 - 4 Weken}\\
 
-De uitwerking van het script gebeurt via een Ansible Playbook, dat gebruikmaakt van verschillende YAML-bestanden om een opsplitsing te maken tussen de verschillende types toestellen.
-Het playbook is een zelfgeschreven verzameling van bestanden die alle nodige voorzieningen bevat en de benodigde toestellen configureert. De configuraties zijn daarbij opgesplitst in afzonderlijke taken.
+De volgende stap is de uitwerking van het configuratiescript, welke gebeurt via een Ansible Playbook. 
+Dit playbook maakt gebruik van verschillende YAML-bestanden, zodat er een duidelijke scheiding kan worden gemaakt tussen de configuraties voor de verschillende typen toestellen. 
+Het Ansible Playbook zelf is een zelfgeschreven verzameling van bestanden die alle nodige configuraties en benodigdheden bevat. 
+Hierbij worden de configuraties opgesplitst in afzonderlijke taken, zodat iedere stap duidelijk is. 
+De ontwerpfase omvat ook het testen van het playbook in een gecontroleerde omgeving, waar de scripts kunnen worden verfijnd voordat ze in de productieomgeving worden uitgerold.
 
 \subsection{Testing}
 \label{sec:testing}
 {\small Duurtijd : 3 - 4 Weken}\\
 
-Het testen van dit script zal plaatsvinden in een labo-omgeving. In het eerste stadium worden virtuele machines op de testservers gebruikt als een soort 'sandbox'.
-Deze omgeving zal dan ook gebruikt worden als een proof of concept.
-Indien alles daar goed verloopt, kan er worden overgegaan naar de volgende stap.
-Bij foutmeldingen of problemen zal contact worden opgenomen met de co-promotor. Voor eenvoudige fouten kan ook gebruik worden gemaakt van online bronnen om een oplossing te vinden.
+Het testen van het script zal plaatsvinden in een labomgeving, waarbij een reeks virtuele machines op de testservers zal worden ingezet. 
+Deze machines dienen als een soort 'sandbox', waarin de configuraties veilig kunnen worden getest zonder de productieomgeving te beïnvloeden. 
+De labomgeving zal ook dienen als proof of concept, waarbij de functionaliteit en betrouwbaarheid van het playbook grondig worden getest.
+In deze fase worden de configuraties getest, en worden eventuele problemen of fouten genoteerd. 
+Ook wordt hier gekeken of alles functioneert zoals verwacht en kan er gekeken worden welke toestellen op welke manier compatibel zijn. 
+Bij elk probleem wordt onderzocht hoe dit kan worden opgelost, en wordt gekeken of bepaalde delen van het script kunnen worden verbeterd of vereenvoudigd. 
+Indien er grote delen van de configuratie kunnen worden samengevoegd of aangepast, wordt dit gedaan om een robuust en efficiënt playbook te ontwikkelen.
+Het einddoel van de testfase is om een playbook te creëren dat betrouwbaar en flexibel genoeg is om gebruikt te worden op verschillende typen netwerkapparatuur, 
+met de garantie dat het script effectief en zonder grote complicaties werkt.
 
 \subsection{Deployment}
 \label{sec:deployment}
 {\small Duurtijd : 2 - 4 Weken}\\
 
-De uitrol van het script verloopt in verschillende stadia. 
-Zodra alles is goedgekeurd in de testomgeving, wordt als eerste gekeken naar de overgang van de backbone van het bedrijf naar IPv6.
-Dit is de eerste stap omdat de backbone uit een groot aantal merken netwerkapparatuur bestaat, wat een bredere testbasis biedt.\\
-
-Na de implementatie op de backbone wordt de focus verlegd naar kleine particuliere netwerken. 
-Dit stadium heeft een lager risico, waardoor eventuele problemen makkelijker op te lossen zijn voordat grotere implementaties plaatsvinden.\\
-
-In het laatste stadium worden de grote locaties aangepakt, zoals onderwijsinstellingen en grote studentenkoten. 
-Voor deze implementatie is eerst overleg nodig met de netwerkverantwoordelijken van de locaties om een probleemloze overgang te garanderen.
+Na het testen van het playbook kan er een rapport worden opgesteld, waarin de opgetreden problemen, fouten en de daaropvolgende oplossingen worden gedocumenteerd. 
+Dit rapport zal ook aanbevelingen bevatten voor eventuele toekomstige verbeteringen of uitbreidingen van het playbook. 
+Bovendien zal er al een eerste versie van het playbook beschikbaar zijn, die klaar is voor implementatie in de productieomgeving.
+Indien nodig kan het playbook verder worden uitgewerkt en geoptimaliseerd door SmartEye, om te zorgen dat het geschikt is voor de grotere netwerken van de organisatie. 
+Het einddoel van deze fase is om een goed werkend en geoptimaliseerd playbook te leveren dat kan worden toegepast op de netwerkapparatuur van de organisatie. 
+Het playbook zal dan verder worden ingezet in de bredere netwerkinfrastructuur, wat de netwerkbeheerprocessen zal automatiseren en vereenvoudigen.
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-De implementatie van een geautomatiseerde methode voor de overgang naar IPv6 op het Eduroam-netwerk heeft aangetoond 
-dat een netwerk met verschillende netwerkapparatuur een uitgebreid stappenplan vereist. 
-Het is daarbij essentieel om een duidelijk onderscheid te maken tussen de verschillende vereisten van de gebruikte apparatuur.
+In dit onderzoek wordt een geautomatiseerde oplossing ontwikkeld voor het configureren van netwerkapparatuur in een multi-tenant omgeving, met een focus op de implementatie van IPv6. 
+Het doel is om een Ansible Playbook te creëren dat op efficiënte wijze de configuratie van verschillende netwerkapparaten kan uitvoeren, rekening houdend met de diversiteit aan toestellen van merken zoals MikroTik en Cisco. 
+Door gebruik te maken van SLAAC voor de automatische adresconfiguratie, wordt een robuuste en flexibele oplossing gecreëerd die eenvoudig schaalbaar is naar grotere netwerken.
+\\
 
-De belangrijkste resultaten zijn:
-\begin{itemize}
-    \item Een robuust script dat kan gebruikt worden voor de verschillende merken van netwerkapparatuur.
-    \item Een overgang voor alle klanten van SmartEye naar IPv6 waarbij hoofdzakelijk op een dualstack wijze gewerkt is.
-    \item Een script dat foutbestendig is en dat een bestaand netwerk niet uitschakelt.
-\end{itemize}
+In de voorbereidende fase wordt een certificaat behaald, en wordt gedetailleerde documentatie verzameld, waarmee de basis wordt gelegd voor het ontwikkelen van de netwerkconfiguraties. 
+In de ontwerp- en testfase zal een proof of concept (POC) worden opgezet voor kleine netwerken, waarin de werking van het Ansible Playbook zal worden gecontroleerd en
+de verschillende compatibiliteitsproblemen geïdentificeerd en opgelost kunnen worden.
+\\
 
-De testfase in de labo-omgeving heeft de efficiëntie van de scripts getoond en de uitrol op de backbone van SmartEye heeft de betrouwbaarheid van het netwerk bevestigd. 
-Dit biedt een basis voor de verdere implementatie op externe locaties van nieuwe klanten/gebruikers van het Eduroam netwerk.
+Het resultaat van deze proef zal een rapport opleveren dat de belangrijke overwegingen beschrijft waarmee rekening gehouden moet worden bij de geautomatiseerde uitrol van netwerkconfiguraties. 
+Dit rapport zal inzicht geven in de mogelijke valkuilen en de benodigde aanpassingen voor een succesvolle implementatie op grotere schaal. 
+De verwachting is dat het playbook effectief zal werken voor kleinere netwerken, en daarmee een solide basis biedt voor verdere uitrol naar grotere netwerken.
+Hieronder vallen niet enkel de netwerken voorzien door SmartEye maar ook andere organisaties met een zelfde idee.
+\\
+
+Na de uitrol kan SmartEye profiteren van een geautomatiseerde aanpak die niet alleen de netwerkconfiguratie versnelt, maar ook de consistentie en betrouwbaarheid van het netwerkbeheer verhoogt. 
+Toekomstig werk zal zich richten op het verder uitbreiden van het playbook voor grotere netwerkomgevingen en het uitbreiden van de functionaliteit om nog meer netwerkapparaten en configuratieopties te ondersteunen. 
+Uiteindelijk zal de uitgevoerde proef inzichten bieden en een oplossing voor de automatisering van netwerkconfiguraties bij SmartEye leveren, met inachtneming van de uitzonderingen die in het rapport worden beschreven.
+Eventueel kan er dan ook bekeken worden of er delen van het onderzoek kunnen hergebruikt worden voor andere organistaties. 

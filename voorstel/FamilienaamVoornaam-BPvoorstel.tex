@@ -23,14 +23,14 @@
 \academicyear{2024-2025} % TODO: pas het academiejaar aan
 
 % TODO: Werktitel
-\title{Automatisatie van de transitie naar IPv6-netwerken voor studentenkoten en onderwijsinstellingen binnen Eduroam}
+\title{Automatisering van IPv6-ondersteuning in netwerken voor multi-tenant gebouwen: onderzoek en implementatie.}
 
 % TODO: Studentnaam en emailadres invullen
 \author{Wout De Temmerman}
 \email{wout.detemmerman@student.hogent.be}
 
 % TODO: Geef de co-promotor op
-\supervisor[Co-promotor]{N. Verslycken (onder voorbehoud) (SmartEye, \href{mailto:nicky.verslycken@smarteye.eu}{nicky.verslycken@smarteye.eu})}
+\supervisor[Co-promotor]{N. Verslycken (SmartEye, \href{mailto:nicky.verslycken@smarteye.eu}{nicky.verslycken@smarteye.eu})}
 
 % Binnen welke specialisatierichting uit 3TI situeert dit onderzoek zich?
 % Kies uit deze lijst:
@@ -43,18 +43,35 @@
 % - Als het onderzoek niet past binnen een van deze domeinen specifieer je deze
 %   zelf
 %
-\specialisation{System \& Network Administrator}
-\keywords{IPv6, Dual-Stack, Netwerken, Eduroam}
+\specialisation{System And Network Administrator}
+\keywords{IPv6, Dual-Stack, Netwerken, multi-tenant}
 
 \begin{document}
 
 \begin{abstract}
-  SmartEye beheert meer dan 700 netwerklocaties, zowel voor particuliere kotuitbaters als voor studentenvoorzieningen zoals Upkot, Xior en zelfs voor onderwijsinstellingen zoals HoGent en Artevelde.
-  Deze diversiteit aan infrastructuur maakt het uitrollen van netwerkupgrades uitdagend, waardoor er gebruik gemaakt moet worden van automatiseringstools zoals Ansible.
-  De volgende stap in de toekomst van SmartEye is de overgang naar IPv6, een upgrade aan hun netwerk die al hun locaties beter futureproof maakt.
-  De gekozen methode hiervoor zal afhangen van meerdere factoren. De implementatie van een dual-stack netwerk, waarbij zowel IPv4 als IPv6 worden ondersteund, wordt beschouwd als de meest robuuste en door SmartEye zelf verkozen aanpak.
-  Toch moet worden getest of dit haalbaar is, aangezien er gebruik wordt gemaakt van een groot assortiment aan toestellen die mogelijk niet allemaal compatibel zijn met deze technologie.
-  Dit onderzoek richt zich op het ontwikkelen van een geautomatiseerde methode om deze transitie uit te voeren voor de verschillende types en groottes van infrastructuur.
+SmartEye beheert meer dan 700 netwerklocaties, waaronder particuliere kotuitbaters, studentenvoorzieningen zoals Upkot en Xior, 
+en onderwijsinstellingen zoals HoGent en Artevelde. Deze diversiteit aan infrastructuur maakt het uitrollen van netwerkupgrades uitdagend, 
+vooral omdat elk type netwerkapparatuur een verschillende configuratie vereist. 
+Met de geplande overgang naar IPv6 staat SmartEye voor de taak om hun netwerken toekomstbestendig te maken met een geautomatiseerde oplossing. 
+Hiervoor willen ze gebruik maken van Ansible Playbooks, maar er is nog onvoldoende duidelijkheid over wat er nodig is om een goed werkend playbook op te stellen dat aan al hun eisen voldoet.
+\\
+
+Dit onderzoek richt zich op het scheppen van duidelijkheid over wat er allemaal nodig is bij het opstellen van een Ansible Playbook, 
+voor de ondersteuning van IPv6 in verschillende netwerkinfrastructuren. Het doel is om de vereisten en best practices in kaart te brengen, 
+mogelijke knelpunten te identificeren en te onderzoeken welke netwerkapparaten extra aandacht nodig hebben wat betreft compatibiliteit. 
+Specifieke aandacht wordt besteed aan apparatuur zoals Cisco en MikroTik, aangezien deze verschillende configuratieprotocollen vereisen. 
+Ook wordt onderzocht hoe foutbestendigheid en veiligheid kunnen worden ingebouwd in het playbook, 
+zodat bestaande netwerken niet worden verstoord tijdens de migratie naar een dual-stack omgeving.
+\\
+
+Tijdens het onderzoek wordt er een laboratoriumomgeving opgezet waarin de playbooks kunnen worden ontwikkeld en getest. 
+Hier kunnen configuraties worden gesimuleerd en kunnen problemen vroegtijdig worden opgespoord en opgelost. 
+Daarnaast zal de overgang naar IPv6 voor de eigen backbone van SmartEye worden gebruikt als proefproject om te testen hoe schaalbaar en effectief de playbooks zijn. 
+Door deze aanpak wordt een blauwdruk ontwikkeld die kan dienen voor de verdere uitrol van IPv6 binnen alle beheerde netwerken van SmartEye.
+\\
+
+Dit onderzoek levert een praktische handleiding en aanbevelingen op voor het opstellen van effectieve en robuuste Ansible Playbooks, 
+waarbij de nadruk ligt op compatibiliteit, foutbestendigheid en schaalbaarheid.
 \end{abstract}
 
 \tableofcontents
@@ -63,6 +80,7 @@
 % kan opgenomen worden in de bijlagen van de bachelorproef zelf.
 \input{voorstel-inhoud}
 
+\nocite{*}
 \printbibliography[heading=bibintoc]
 
 \end{document}
