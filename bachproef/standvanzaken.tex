@@ -46,32 +46,91 @@
   Dit terwijl marktleiders van internet service providers zoals Cloudflare, Proximus en Telenet dicht tegen de 100\% zitten op het vlak van aangeboden IPv6 percentage \autocite{Test2024}. 
   Ook op de website van \textcite{EuropeanCommission} is zichtbaar dat op vlak van end-user implementatie België deel van de marktleiders is, terwijl de services nog geen 30\% haalt.
   
-  \section{SLAAC}
-  \label{sec:SLAAC}
+  \section{IPv6 Connectiviteit}
+  \label{sec:ipv6 connectiviteit}
+
+  IPv6 is de opvolger van IPv4 en biedt aanzienlijke voordelen, zoals een bijna onuitputtelijke adresruimte en verbeterde ondersteuning voor mobiliteit en beveiliging. 
+  Het protocol is ontworpen om te voldoen aan de groeiende vraag naar internetverbindingen en om de beperkingen van IPv4, zoals de schaarse 32-bit adresruimte, op te lossen \textcite{NSA2023}. 
+  Daarnaast faciliteert IPv6 een efficiëntere routing en maakt het gebruik van autoconfiguratie, waardoor de netwerkbeheerder minder handmatige configuratie nodig heeft \textcite{Cliff2012}.
   
-  IPv6 biedt twee primaire methoden voor automatische adresconfiguratie: SLAAC en DHCPv6. 
-  SLAAC (Stateless Address Autoconfiguration) stelt apparaten in staat zich automatisch te configureren door gebruik te maken van Router \\ Advertisement-berichten (RA) die door routers worden verzonden. 
-  Deze berichten bevatten belangrijke informatie, zoals het subnetprefix en de standaardrouter. Apparaten genereren vervolgens een globaal IPv6-adres op basis van het ontvangen prefix en hun interface-ID. 
-  Het voordeel van SLAAC is dat het geen beheer aan de routerzijde vereist, wat het een eenvoudige en robuuste oplossing maakt \autocite{Maris2024}.
-  \\
+  \subsection{Addressering}
+  Een van de meest opvallende kenmerken van IPv6 is de uitgebreide adresruimte: er zijn $2^{128}$ mogelijke adressen beschikbaar. 
+  Dit is een enorme uitbreiding ten opzichte van de 32-bit ruimte van IPv4, wat toelaat dat elk apparaat wereldwijd een uniek adres kan krijgen. 
+  IPv6-adressen kunnen worden onderverdeeld in verschillende typen. Zo zijn er link-local adressen, 
+  die automatisch worden toegekend aan interfaces en uitsluitend binnen een lokaal netwerksegment werken (beginnen met \texttt{FE80::/10}), en globale unicast-adressen, 
+  die routable zijn over het gehele internet \textcite{Zunainah2021}. Deze indeling maakt het beheer en de routering van adressen eenvoudiger en efficiënter.
   
-  DHCPv6 (Stateful Address Configuration) biedt daarentegen een centraal protocol om adressen en andere netwerkparameters toe te wijzen. 
-  In dit geval sturen routers RA-berichten zonder prefixinformatie, waardoor apparaten DHCPv6 gebruiken voor hun configuratie. 
-  Dit maakt DHCPv6 aantrekkelijker voor netwerken die meer controle nodig hebben over het toewijzen van adressen en andere netwerkinstellingen \autocite{Maris2024}.
-  \\
+  \subsection{Structuur}
+  De header van een IPv6-pakket heeft een vaste lengte van 40 bytes, wat bijdraagt aan een efficiëntere verwerking door routers in vergelijking met de variabele headerlengte van IPv4. 
+  De header bevat belangrijke velden zoals het verkeerslabel (flow label) en de prioriteitsinstellingen, 
+  maar laat tevens ruimte voor uitbreidbare headers die extra functionaliteiten kunnen toevoegen zonder de basisstructuur te wijzigen \textcite{Cliff2012}. 
+  Deze modulaire opbouw zorgt voor een hoge mate van flexibiliteit en schaalbaarheid binnen IPv6-netwerken.
   
-  Omdat het de bedoeling is om een geautomatiseerde aanpak te hanteren, zal in elk netwerk gebruik worden gemaakt van SLAAC (Stateless Address Autoconfiguration), tenzij anders gevraagd.
+  \subsection{Address Resolution}
+  In IPv6 wordt address resolution verzorgd door het Neighbor Discovery Protocol (NDP) in plaats van ARP, zoals dat in IPv4 gebruikelijk is. 
+  NDP omvat diverse mechanismen, waaronder Duplicate Address Detection (DAD), dat garandeert dat elk IPv6-adres uniek is binnen het netwerk. 
+  Daarnaast worden Neighbor Solicitation (NS) en Neighbor Advertisement (NA) berichten ingezet om link-layer adressen op te zoeken en de bereikbaarheid van andere apparaten vast te stellen. 
+  Deze processen zorgen ervoor dat IPv6-netwerken robuust en betrouwbaar functioneren, wat essentieel is voor een correcte netwerkcommunicatie \textcite{NSA2023}.
+
+  \subsection{NAT66}
+
+  NAT66, oftewel Network Address Translation voor IPv6, is een techniek die gebruikt wordt om IPv6-adressen te vertalen tussen verschillende netwerksegmenten. 
+  Zoals \textcite{Cilloni2018} aangeeft, biedt NAT66 een methode om interne IPv6-adressen te verbergen en zo bepaalde netwerkomgevingen compatibel te maken. 
+  Aan de andere kant waarschuwt \textcite{Coffeen2016} voor de mogelijke nadelen van het implementeren van NAT66, zoals complicaties in end-to-end connectiviteit en routing, 
+  wat in tegenspraak kan zijn met de oorspronkelijke ontwerpprincipes van IPv6. Hoewel NAT66 in specifieke situaties een tijdelijke oplossing kan bieden, 
+  is het in de meeste gevallen beter om te streven naar een pure end-to-end IPv6-connectiviteit zonder adresvertaling, zodat de inherente voordelen van IPv6 volledig benut worden.
+
+
+  \section{Layer 2-tunnels}
+  \label{sec:layer 2-tunnels}
+
+  Layer 2-tunneling, zoals geïmplementeerd via het Layer Two Tunneling Protocol (L2TP), wordt veelvuldig ingezet in carrier netwerken om Layer 2-frames op een efficiënte en transparante wijze over meerdere netwerken te transporteren. 
+  Volgens Hu et al. \textcite{Hu2011} richt de implementatie van L2TP zich op het opzetten van virtuele verbindingen tussen twee punten in een netwerk, 
+  waardoor het mogelijk wordt om diverse soorten dataverkeer samen te voegen en te beheren over een gemeenschappelijke infrastructuur. 
+  Daarnaast beschrijft Zola \textcite{Zola2021} hoe L2TP, met zijn ingebouwde mechanismen voor authenticatie en encryptie, bijdraagt aan een veilige en betrouwbare overdracht van data. 
+  De flexibiliteit en schaalbaarheid van Layer 2-tunnels maken deze technologie bijzonder geschikt voor uiteenlopende toepassingen in zowel commerciële als particuliere netwerkomgevingen, 
+  waarbij de nadruk ligt op de integriteit en de prestaties van de datatransmissie.
   
-  \section{Netwerk-configuratie via Ansible}
-  \label{sec:netconfigAnsible}
+
+  \section{OpenVPN}
+  \label{sec:openvpn}
+
+  OpenVPN is een open-source VPN-oplossing die veilige netwerkverbindingen creëert door gebruik te maken van geavanceerde encryptietechnieken en virtuele netwerkinterfaces. 
+  Het principe van OpenVPN, zoals beschreven door \textcite{Seppaenen2014}, berust op het aanmaken van een virtuele netwerkinterface die fungeert als poort voor al het VPN-verkeer, 
+  waardoor alle data die via deze tunnel loopt versleuteld en beschermd is. OpenVPN kan eenvoudig geïntegreerd worden met andere netwerkopstellingen, zoals Layer 2-tunnels. 
+  In zo'n combinatie fungeert de Layer 2-tunnel als de fysieke of virtuele verbinding die twee netwerkelementen met elkaar verbindt, terwijl OpenVPN bovenop deze tunnel een extra beveiligingslaag biedt door het verkeer te encapsuleren en te versleutelen. 
+  Dit maakt het mogelijk om de voordelen van zowel de flexibiliteit van Layer 2-verbindingen als de sterke beveiligingsmechanismen van OpenVPN te benutten. 
+  De uitgebreide configuratiemogelijkheden en gedetailleerde richtlijnen, zoals terug te vinden in de referentiemanual van \textcite{Yonan}, maken het instellen en optimaliseren van deze combinatie mogelijk, 
+  wat resulteert in een robuuste en veilige netwerkoplossing die geschikt is voor uiteenlopende toepassingen binnen moderne IT-omgevingen.
+
+  \section{Ansible}
+  \label{sec:ansible}
+
+  Ansible is een open-source automatiseringsplatform dat breed wordt ingezet voor configuratiebeheer, applicatiedeployment en task automation. 
+  Dankzij de agentless architectuur is het niet nodig om extra software op de beheerde nodes te installeren, wat de integratie in diverse IT-omgevingen vereenvoudigt \textcite{Documentation2025}. 
+  Ansible maakt gebruik van YAML-gebaseerde playbooks, waarmee taken op een consistente en herhaalbare manier uitgevoerd kunnen worden.
+
+  \subsection*{Automatisatie met Ansible}
+  Door middel van Ansible kunnen complexe taken, zoals software-installaties, servicebeheer en netwerkconfiguraties, geautomatiseerd worden. 
+  Dit reduceert niet alleen de kans op menselijke fouten, maar zorgt er ook voor dat omgevingen snel en uniform worden uitgerold. 
+  Likitha beschrijft in \textcite{Likitha2022} hoe Ansible succesvol ingezet wordt voor de automatisering van serverconfiguraties, wat de efficiëntie binnen IT-omgevingen aanzienlijk verhoogt.
   
-  Een eerste stap in automatisatie is het plaatsen van de configuratie in een algemeen configuratiebestand en het testen of deze correct kan worden uitgelezen door de netwerkapparatuur. 
-  Voor toestellen van MikroTik blijkt dit gelukkig vrij eenvoudig te zijn, zoals ook aangetoond door \textcite{Arturs2022}.
-  \\
+  \subsection*{Jinja2 voor Templating}
+  Een krachtig aspect van Ansible is de integratie van de Jinja2-sjabloonmotor. 
+  Met Jinja2 kunnen dynamische configuratiebestanden worden gegenereerd waarbij variabelen en conditionele logica eenvoudig worden verwerkt. 
+  Dit maakt het mogelijk om configuraties te parametriseren en herbruikbaar te maken. 
+  Moustakis illustreert in \textcite{Moustakis2023} hoe Jinja2 het templatingproces vereenvoudigt en de flexibiliteit van Ansible vergroot.
   
-  Een geautomatiseerde uitrol van netwerkconfiguraties kan worden uitgevoerd met Ansible, waarbij onderscheid moet worden gemaakt tussen de verschillende merken netwerkapparatuur. 
-  Hiervoor wordt de configuratie opgesplitst in aparte YAML-bestanden, die in het Ansible-playbook worden aangeroepen.
-  \\
+  \subsection*{Beveiliging met Ansible Vault}
+  Voor het veilig beheren van gevoelige informatie biedt Ansible de mogelijkheid om gebruik te maken van Ansible Vault. 
+  Hiermee kunnen bestanden zoals wachtwoorden, API-sleutels en andere geheimen versleuteld worden, zodat deze niet in platte tekst in de playbooks voorkomen. 
+  De implementatie is eenvoudig:
+  \begin{itemize}
+      \item Gebruik \texttt{ansible-vault create <bestand>} om een nieuw versleuteld bestand aan te maken.
+      \item Gebruik \texttt{ansible-vault encrypt <bestand>} om een bestaand bestand te versleutelen.
+  \end{itemize}
+  Samatkar bespreekt in \textcite{Samatkar2023} enkele security best practices voor Ansible-automatisering, waarin het belang van Ansible Vault voor de bescherming van gevoelige data centraal staat.\\
   
-  Deze YAML-bestanden bevatten minimaal de volgende componenten: functies voor het instellen van IPv6-adressen op de interfaces, de juiste configuratie van de loopback-interface, 
-  en de minimale configuratie voor EIGRP of OSPF \autocite{MohdFuziMohdFaris2021}.
+  \noindent Samengevat biedt Ansible een krachtige, flexibele en veilige oplossing voor automatisering in moderne IT-omgevingen. 
+  De combinatie van geavanceerde templating met Jinja2 en de beveiligingsmogelijkheden van Ansible Vault draagt bij aan een efficiënte en veilige implementatie van configuraties en deploymentprocessen.
+  
