@@ -49,9 +49,9 @@
   \section{IPv6 Connectiviteit}
   \label{sec:ipv6 connectiviteit}
 
-  IPv6 is de opvolger van IPv4 en biedt aanzienlijke voordelen, zoals een bijna onuitputtelijke adresruimte en verbeterde ondersteuning voor mobiliteit en beveiliging. 
-  Het protocol is ontworpen om te voldoen aan de groeiende vraag naar internetverbindingen en om de beperkingen van IPv4, zoals de schaarse 32-bit adresruimte, op te lossen \textcite{NSA2023}. 
-  Daarnaast faciliteert IPv6 een efficiëntere routing en maakt het gebruik van autoconfiguratie, waardoor de netwerkbeheerder minder handmatige configuratie nodig heeft \textcite{Cliff2012}.
+  IPv6 is de opvolger van IPv4 en biedt duidelijke voordelen, zoals een bijna onuitputtelijke adresruimte en verbeterde ondersteuning voor mobiliteit en beveiliging. 
+  Het protocol is ontworpen om te voldoen aan de groeiende vraag naar internetverbindingen en om de beperkingen van IPv4, zoals de limiterende 32-bit adresruimte, op te lossen \textcite{NSA2023}. 
+  Daarnaast biedt IPv6 een efficiëntere routing aan en maakt het gebruik van autoconfiguratie, waardoor de netwerkbeheerder minder handmatige configuratie nodig heeft \textcite{Cliff2012}.
   
   \subsection{Addressering}
   Een van de meest opvallende kenmerken van IPv6 is de uitgebreide adresruimte: er zijn $2^{128}$ mogelijke adressen beschikbaar. 
@@ -63,12 +63,12 @@
   \subsection{Structuur}
   De header van een IPv6-pakket heeft een vaste lengte van 40 bytes, wat bijdraagt aan een efficiëntere verwerking door routers in vergelijking met de variabele headerlengte van IPv4. 
   De header bevat belangrijke velden zoals het verkeerslabel (flow label) en de prioriteitsinstellingen, 
-  maar laat tevens ruimte voor uitbreidbare headers die extra functionaliteiten kunnen toevoegen zonder de basisstructuur te wijzigen \textcite{Cliff2012}. 
-  Deze modulaire opbouw zorgt voor een hoge mate van flexibiliteit en schaalbaarheid binnen IPv6-netwerken.
+  maar laat ook ruimte voor uitbreidbare headers die extra functionaliteiten kunnen toevoegen zonder de basisstructuur te wijzigen \textcite{Cliff2012}. 
+  Deze modulaire opbouw zorgt voor meer flexibiliteit en schaalbaarheid binnen IPv6-netwerken.
   
   \subsection{Address Resolution}
-  In IPv6 wordt address resolution verzorgd door het Neighbor Discovery Protocol (NDP) in plaats van ARP, zoals dat in IPv4 gebruikelijk is. 
-  NDP omvat diverse mechanismen, waaronder Duplicate Address Detection (DAD), dat garandeert dat elk IPv6-adres uniek is binnen het netwerk. 
+  In IPv6 wordt address resolution verzorgd door het Neighbor Discovery Protocol (NDP) in plaats van ARP, zoals dat in IPv4 is. 
+  NDP bevat verschillende mechanismen, waaronder Duplicate Address Detection (DAD), dat garandeert dat elk IPv6-adres uniek is binnen het netwerk. 
   Daarnaast worden Neighbor Solicitation (NS) en Neighbor Advertisement (NA) berichten ingezet om link-layer adressen op te zoeken en de bereikbaarheid van andere apparaten vast te stellen. 
   Deze processen zorgen ervoor dat IPv6-netwerken robuust en betrouwbaar functioneren, wat essentieel is voor een correcte netwerkcommunicatie \textcite{NSA2023}.
 
@@ -78,17 +78,17 @@
   Zoals \textcite{Cilloni2018} aangeeft, biedt NAT66 een methode om interne IPv6-adressen te verbergen en zo bepaalde netwerkomgevingen compatibel te maken. 
   Aan de andere kant waarschuwt \textcite{Coffeen2016} voor de mogelijke nadelen van het implementeren van NAT66, zoals complicaties in end-to-end connectiviteit en routing, 
   wat in tegenspraak kan zijn met de oorspronkelijke ontwerpprincipes van IPv6. Hoewel NAT66 in specifieke situaties een tijdelijke oplossing kan bieden, 
-  is het in de meeste gevallen beter om te streven naar een pure end-to-end IPv6-connectiviteit zonder adresvertaling, zodat de inherente voordelen van IPv6 volledig benut worden.
+  is het in de meeste gevallen beter om te streven naar een pure end-to-end IPv6-connectiviteit zonder adresvertaling, zodat de oorspronkelijke voordelen van IPv6 volledig kunnen benut worden.
 
 
   \section{Layer 2-tunnels}
   \label{sec:layer 2-tunnels}
 
-  Layer 2-tunneling, zoals geïmplementeerd via het Layer Two Tunneling Protocol (L2TP), wordt veelvuldig ingezet in carrier netwerken om Layer 2-frames op een efficiënte en transparante wijze over meerdere netwerken te transporteren. 
-  Volgens Hu et al. \textcite{Hu2011} richt de implementatie van L2TP zich op het opzetten van virtuele verbindingen tussen twee punten in een netwerk, 
-  waardoor het mogelijk wordt om diverse soorten dataverkeer samen te voegen en te beheren over een gemeenschappelijke infrastructuur. 
-  Daarnaast beschrijft Zola \textcite{Zola2021} hoe L2TP, met zijn ingebouwde mechanismen voor authenticatie en encryptie, bijdraagt aan een veilige en betrouwbare overdracht van data. 
-  De flexibiliteit en schaalbaarheid van Layer 2-tunnels maken deze technologie bijzonder geschikt voor uiteenlopende toepassingen in zowel commerciële als particuliere netwerkomgevingen, 
+  Layer 2-tunneling, zoals geïmplementeerd via het Layer Two Tunneling Protocol (L2TP), wordt veelvuldig ingezet in carrier netwerken om Layer 2-frames op een efficiënte en transparante manier over meerdere netwerken te transporteren. 
+  Volgens \textcite{Hu2011} richt de implementatie van L2TP zich op het opzetten van virtuele verbindingen tussen twee punten in een netwerk, 
+  waardoor het mogelijk wordt om verschillende soorten dataverkeer samen te voegen en te beheren over een gemeenschappelijke infrastructuur. 
+  Daarnaast beschrijft \textcite{Zola2021} hoe L2TP, met zijn ingebouwde mechanismen voor authenticatie en encryptie, bijdraagt aan een veilige en betrouwbare overdracht van data. 
+  De flexibiliteit en schaalbaarheid van Layer 2-tunnels maken deze technologie geschikt voor uiteenlopende toepassingen in zowel commerciële als particuliere netwerkomgevingen zoals deze van HOGENT, 
   waarbij de nadruk ligt op de integriteit en de prestaties van de datatransmissie.
   
 
@@ -96,10 +96,10 @@
   \label{sec:openvpn}
 
   OpenVPN is een open-source VPN-oplossing die veilige netwerkverbindingen creëert door gebruik te maken van geavanceerde encryptietechnieken en virtuele netwerkinterfaces. 
-  Het principe van OpenVPN, zoals beschreven door \textcite{Seppaenen2014}, berust op het aanmaken van een virtuele netwerkinterface die fungeert als poort voor al het VPN-verkeer, 
+  Het principe van OpenVPN, zoals beschreven door \textcite{Seppaenen2014}, steunt op het aanmaken van een virtuele netwerkinterface die gebruik wordt als poort voor al het VPN-verkeer, 
   waardoor alle data die via deze tunnel loopt versleuteld en beschermd is. OpenVPN kan eenvoudig geïntegreerd worden met andere netwerkopstellingen, zoals Layer 2-tunnels. 
-  In zo'n combinatie fungeert de Layer 2-tunnel als de fysieke of virtuele verbinding die twee netwerkelementen met elkaar verbindt, terwijl OpenVPN bovenop deze tunnel een extra beveiligingslaag biedt door het verkeer te encapsuleren en te versleutelen. 
-  Dit maakt het mogelijk om de voordelen van zowel de flexibiliteit van Layer 2-verbindingen als de sterke beveiligingsmechanismen van OpenVPN te benutten. 
+  In zo'n combinatie werkt de Layer 2-tunnel als de fysieke of virtuele verbinding die twee netwerkelementen met elkaar verbindt, terwijl OpenVPN bovenop deze tunnel een extra beveiligingslaag biedt door het verkeer te encapsuleren en te versleutelen. 
+  Dit maakt het mogelijk om de voordelen van zowel de flexibiliteit van Layer 2-verbindingen als de sterke beveiligingsmechanismen van OpenVPN te gebruiken. 
   De uitgebreide configuratiemogelijkheden en gedetailleerde richtlijnen, zoals terug te vinden in de referentiemanual van \textcite{Yonan}, maken het instellen en optimaliseren van deze combinatie mogelijk, 
   wat resulteert in een robuuste en veilige netwerkoplossing die geschikt is voor uiteenlopende toepassingen binnen moderne IT-omgevingen.
 
@@ -108,28 +108,28 @@
 
   Ansible is een open-source automatiseringsplatform dat breed wordt ingezet voor configuratiebeheer, applicatiedeployment en task automation. 
   Dankzij de agentless architectuur is het niet nodig om extra software op de beheerde nodes te installeren, wat de integratie in diverse IT-omgevingen vereenvoudigt \textcite{Documentation2025}. 
-  Ansible maakt gebruik van YAML-gebaseerde playbooks, waarmee taken op een consistente en herhaalbare manier uitgevoerd kunnen worden.
+  Ansible maakt gebruik van YAML-gebaseerde playbooks, waarmee taken op een herhaalbare manier uitgevoerd kunnen worden.
 
   \subsection*{Automatisatie met Ansible}
   Door middel van Ansible kunnen complexe taken, zoals software-installaties, servicebeheer en netwerkconfiguraties, geautomatiseerd worden. 
-  Dit reduceert niet alleen de kans op menselijke fouten, maar zorgt er ook voor dat omgevingen snel en uniform worden uitgerold. 
-  Likitha beschrijft in \textcite{Likitha2022} hoe Ansible succesvol ingezet wordt voor de automatisering van serverconfiguraties, wat de efficiëntie binnen IT-omgevingen aanzienlijk verhoogt.
+  Dit vermindert niet alleen de kans op menselijke fouten, maar zorgt er ook voor dat omgevingen snel en uniform worden uitgerold. 
+  \textcite{Likitha2022} beschrijft hoe Ansible succesvol ingezet wordt voor de automatisering van serverconfiguraties, wat de efficiëntie binnen IT-omgevingen opmerkelijk verhoogt.
   
   \subsection*{Jinja2 voor Templating}
   Een krachtig aspect van Ansible is de integratie van de Jinja2-sjabloonmotor. 
   Met Jinja2 kunnen dynamische configuratiebestanden worden gegenereerd waarbij variabelen en conditionele logica eenvoudig worden verwerkt. 
   Dit maakt het mogelijk om configuraties te parametriseren en herbruikbaar te maken. 
-  Moustakis illustreert in \textcite{Moustakis2023} hoe Jinja2 het templatingproces vereenvoudigt en de flexibiliteit van Ansible vergroot.
+  \textcite{Moustakis2023} illustreert hoe Jinja2 het templatingproces vereenvoudigt en de flexibiliteit van Ansible vergroot.
   
   \subsection*{Beveiliging met Ansible Vault}
   Voor het veilig beheren van gevoelige informatie biedt Ansible de mogelijkheid om gebruik te maken van Ansible Vault. 
-  Hiermee kunnen bestanden zoals wachtwoorden, API-sleutels en andere geheimen versleuteld worden, zodat deze niet in platte tekst in de playbooks voorkomen. 
+  Hiermee kunnen bestanden zoals wachtwoorden, API-sleutels en andere geheimen versleuteld worden, zodat deze niet in leesbare tekst in de playbooks voorkomen. 
   De implementatie is eenvoudig:
   \begin{itemize}
       \item Gebruik \texttt{ansible-vault create <bestand>} om een nieuw versleuteld bestand aan te maken.
       \item Gebruik \texttt{ansible-vault encrypt <bestand>} om een bestaand bestand te versleutelen.
   \end{itemize}
-  Samatkar bespreekt in \textcite{Samatkar2023} enkele security best practices voor Ansible-automatisering, waarin het belang van Ansible Vault voor de bescherming van gevoelige data centraal staat.\\
+  \textcite{Samatkar2023} bespreekt enkele security best practices voor Ansible-automatisering, waarin het belang van Ansible Vault voor de bescherming van gevoelige data centraal staat.\\
   
   \noindent Samengevat biedt Ansible een krachtige, flexibele en veilige oplossing voor automatisering in moderne IT-omgevingen. 
   De combinatie van geavanceerde templating met Jinja2 en de beveiligingsmogelijkheden van Ansible Vault draagt bij aan een efficiënte en veilige implementatie van configuraties en deploymentprocessen.
