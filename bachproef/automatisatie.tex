@@ -4,17 +4,45 @@
 \section{Structuur van de Playbook}
 \label{sec:playbookstructuur}
 
+De structuur van de gebruikte Ansible-playbook is als volgt opgebouwd:
+Er is een hoofdmap voorzien waarin een bestand inventory.yml aanwezig is. Dit bestand definieert welke toestellen deel uitmaken van de setup en welk IP-adres elk toestel heeft.
+Daarnaast bevat de hoofdmap ook een vars.yml-bestand, waarin alle variabelen worden gedefinieerd die gebruikt worden in de configuratiebestanden. 
+Dit omvat zowel vaste instellingen als variabelen die op voorhand gekend zijn, zoals bijvoorbeeld het IP-adres van een toestel en variabelen die specifiek gebruiikt worden binnen de configuratie van de applicaties.
+Voor de effectieve uitvoering van de playbook zijn er drie YAML-bestanden voorzien:
+\begin{itemize}
+    \item Eén bestand voor de opzet van een L2TP-tunnel tussen twee IP-adressen;
+    \item Eén bestand voor de opzet van een OpenVPN-verbinding;
+    \item Eén gecombineerd bestand dat zowel L2TP als OpenVPN configureert.
+\end{itemize}
+
+Afhankelijk van de vereisten van de specifieke opstelling kan er gekozen worden welk van deze playbooks uitgevoerd moet worden.
+Tot slot is er ook een aparte map voorzien waarin de configuratiebestanden staan voor de verschillende gebruikte programma's. 
+Deze bestanden zijn opgesteld aan de hand van Jinja-templating, waardoor de variabelen pas ingevuld worden op het moment dat de playbook effectief wordt uitgevoerd.
+
 \subsection{Connectie met remote hosts}
 
-\subsection{Gebruik van Jinja2 voor templating}
-
-\subsection{Security}
-
-\section{Werking van de Playbook}
-\label{sec:playbookwerking}
+In een ideale situatie wordt de Ansible-playbook opgestart vanaf één centrale control machine, die toegang heeft tot beide toestellen waartussen de VPN-tunnel moet worden opgezet. 
+Deze control machine stuurt dan de configuratieopdrachten via SSH naar beide toestellen. Op die manier kan de volledige opzet en configuratie centraal beheerd en uitgevoerd worden.
+De ideale opstelling ziet er als volgt uit:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{ConnectieAnsible.png}
-    \caption[Overzicht van hoe de connectie praktish in elkaar zit.]{\label{fig:ansibleconnectie}Overzicht van hoe de connectie praktish in elkaar zit.}
+    \caption[Overzicht connectie ideaal]{\label{fig:ansibleconnectie}Overzicht van de ideale connectiestructuur met een centrale Ansible-control machine.}
 \end{figure}
+
+Echter, door firewallrestricties en netwerkbeperkingen in de bestaande infrastructuur is deze ideale configuratie niet mogelijk. De control machine heeft geen rechtstreekse toegang tot beide toestellen. 
+Om dit probleem te omzeilen, is gekozen voor een alternatieve aanpak waarbij de playbook wordt opgesplitst in twee afzonderlijke delen, en deze lokaal op elk toestel worden uitgevoerd. 
+Op die manier configureert elk toestel enkel zichzelf. Dit vereist wel enige hoeveelheid handmatig werk aangezien de playbooks dan op beide servers moet geplaatst worden en de delen configuratie voor de andere server uitgezet.
+De aangepaste opstelling ziet er als volgt uit:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{ConnectieAnsibleCurrent.png}
+    \caption[Overzicht connectie huidig]{\label{fig:ansibleconnectiehuidig}Overzicht van de huidige connectiestructuur waarbij de configuratie lokaal op elk toestel wordt uitgevoerd.}
+\end{figure}
+
+\section{Werking van de Playbook}
+\label{sec:playbookwerking}
+
+TODO

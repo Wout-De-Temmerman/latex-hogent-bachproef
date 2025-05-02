@@ -38,7 +38,7 @@ Als eerste stap van het project wordt ervoor gezorgd dat de nodige machines corr
     Deze verbinding wordt tot stand gebracht via een aangesloten switch, waaraan de studenten hun toestellen verbinden.
 
     \item \textbf{Een tunnelverbinding:}  
-    De server zet een tunnel op, waarbij er gebruik wordt gemaakt van ofwel een pure Layer 2-verbinding, of een combinatie van Layer 2 en een VPN-verbinding. De data wordt via deze tunnel doorgestuurd naar een node binnen het IDLab.
+    De server zet een tunnel op, waarbij er gebruik wordt gemaakt van ofwel een pure Layer 2-verbinding, een combinatie van Layer 2 en een VPN-verbinding of een OpenVpn verbinding alleen op. De data wordt via deze tunnel doorgestuurd naar een node binnen het IDLab.
 
     \item \textbf{De node binnen het IDLab:}  
     Deze heeft als enige taak al het verkeer te routeren naar een publiek IPv6-adres en fungeert zo als de default gateway voor de gebruikers binnen het netwerklabo.
@@ -54,13 +54,14 @@ Als eerste stap van het project wordt ervoor gezorgd dat de nodige machines corr
 \label{sec:testen van tunnels}
 
 Als tweede stap van het project wordt een vergelijkende studie uitgevoerd tussen twee tunnelingtechnologieën.  
-De eenvoudigste methode is het opzetten van een Layer 2-tunnel tussen beide toestellen, waardoor ze functioneren alsof ze op hetzelfde netwerk zijn aangesloten.  
+De eenvoudigste methode is het opzetten van een Layer 2-tunnel tussen beide toestellen, waardoor ze functioneren alsof ze op hetzelfde netwerk zijn aangesloten.
+Een alternatief is om met een pure vorm van OpenVPN te werken waarbij al het verkeer door deze VPN wordt gestuurd.
 Een complexere opstelling maakt daarentegen gebruik van een combinatie van een Layer 2-verbinding en een VPN-tunnel.  
 
-De vergelijking tussen deze twee technologieën richt zich voornamelijk op de verschillende MTU-groottes die vereist zijn voor een correcte gegevensoverdracht.  
-Welke prestatieverschillen bestaan er tussen beide? Zijn ze allebei geschikt voor deze opstelling? En heeft een van de twee een duidelijke voorkeur?  
+De vergelijking tussen deze drie methoden richt zich voornamelijk op de verschillende MTU-groottes die vereist zijn voor een correcte gegevensoverdracht.  
+Welke prestatieverschillen bestaan er tussen deze? Zijn ze allemaal geschikt voor deze opstelling? En heeft een van de drie een duidelijke voorkeur?  
 
-Bij deze analyse moet vooral rekening worden gehouden met de pakketgrootte om te voorkomen dat gegevensfragmentatie optreedt, aangezien beide technologieën de pakketstructuur vergroten.
+Bij deze analyse moet vooral rekening worden gehouden met de pakketgrootte om te voorkomen dat gegevensfragmentatie optreedt, aangezien alle methoden de pakketstructuur vergroten.
 
 \section{Automatisatie}
 \label{sec:automatisatie}
